@@ -4,8 +4,8 @@ from flask import Flask
 import logging
 import sys
 
-def create_app(config_path='../micropub_media.cfg'):
-    app = Flask('micropub_media')
+def create_app(config_path='../spano.cfg'):
+    app = Flask('spano')
     app.config.from_pyfile(config_path)
     configure_logging(app)
     extensions.init_app(app)
