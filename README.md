@@ -49,7 +49,7 @@ To perform a test upload with `curl`:
 
 	curl -D - -F "file=@myfile.jpg" \
 	  -H"Authorization: Bearer xxxx..." \
-	  localhost:5000/micropub
+	  localhost:5000/
 
 You should see output like:
 

@@ -6,7 +6,7 @@ import mimetypes
 
 api = Blueprint('api', __name__)
 
-@api.route('/micropub', methods=['POST'])
+@api.route('/', methods=['POST'])
 @requires_indieauth
 def publish():
     if not 'file' in request.files:
