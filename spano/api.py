@@ -23,4 +23,5 @@ def publish():
 def guess_extension(f):
     ext = mimetypes.guess_extension(f.mimetype)
     ext = '.jpg' if (ext == '.jpe') else ext
+    ext = '.mp3' if (f.mimetype == 'audio/mp3') else ext
     return ext
