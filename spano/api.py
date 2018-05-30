@@ -3,6 +3,7 @@ from flask import request, Response, Blueprint
 from flask_hashfs import FlaskHashFS
 from flask_indieauth import requires_indieauth
 import mimetypes
+import magic
 
 api = Blueprint('api', __name__)
 
@@ -21,7 +22,12 @@ def publish():
         return resp
 
 def guess_extension(f):
-    ext = mimetypes.guess_extension(f.mimetype)
+    m = magic.Magic(mime=True)
+    content = f.stream.read(1024)
+    mimetype = m.from_buffer(content)
+    # current_app.logger.error(mimetype)
+    ext = mimetypes.guess_extension(mimetype)
     ext = '.jpg' if (ext == '.jpe') else ext
     ext = '.mp3' if (f.mimetype == 'audio/mp3') else ext
+    ext = '.txt' if (f.mimetype == 'text/plain') else ext
     return ext
