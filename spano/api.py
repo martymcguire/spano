@@ -17,7 +17,7 @@ def publish():
         f_ext = guess_extension(f)
         address = fs.put(f, extension=f_ext)
         url = fs.url_for(address.relpath)
-        resp = Response ("File created: %s" % url, 201)
+        resp = Response (url, 201)
         resp.headers['Location'] = url
         return resp
 
