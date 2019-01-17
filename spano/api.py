@@ -4,6 +4,7 @@ from flask_hashfs import FlaskHashFS
 from flask_indieauth import requires_indieauth
 import mimetypes
 import magic
+import json
 
 api = Blueprint('api', __name__)
 
@@ -17,7 +18,8 @@ def publish():
         f_ext = guess_extension(f)
         address = fs.put(f, extension=f_ext)
         url = fs.url_for(address.relpath)
-        resp = Response (url, 201)
+        resp = Response ( json.dumps({'url': url}), 201 )
+        resp.headers['Content-type'] = 'application/json'
         resp.headers['Location'] = url
         return resp
 
