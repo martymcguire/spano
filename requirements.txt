@@ -1,4 +1,4 @@
-Flask==0.12
+Flask>=0.12.3
 Flask-IndieAuth==0.0.3.2
 Flask-HashFS==0.3.0
 python-magic==0.4.15
