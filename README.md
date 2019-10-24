@@ -75,6 +75,9 @@ These instructions are generic but hopefully a good starting place:
 * [mod_wsgi for Apache](http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/)
 * [uwsgi for nginx](http://flask.pocoo.org/docs/0.12/deploying/uwsgi/)
 
+### uwsgi
+When the package is installed in global Python path, one can make uWSGI serve it using an expression `spano:create_app("/etc/spano.cfg")`, where `/etc/spano.cfg` is an absolute path to Spano config. You can use --mount to mount the app somewhere.
+
 The Name?
 ---------
 
