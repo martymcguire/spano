@@ -5,6 +5,7 @@ from flask_indieauth import requires_indieauth
 import mimetypes
 import magic
 import json
+import os
 
 api = Blueprint('api', __name__)
 
@@ -27,9 +28,12 @@ def guess_extension(f):
     m = magic.Magic(mime=True)
     content = f.stream.read(1024)
     mimetype = m.from_buffer(content)
-    # current_app.logger.error(mimetype)
     ext = mimetypes.guess_extension(mimetype)
     ext = '.jpg' if (ext == '.jpe') else ext
     ext = '.mp3' if (f.mimetype == 'audio/mp3') else ext
     ext = '.txt' if (f.mimetype == 'text/plain') else ext
+    # sometimes we have to trust the extension we're given?
+    if (f.mimetype == 'application/octet-stream'):
+        fname, ext = os.path.splitext(f.filename)
+    #raise ValueError(mimetype)
     return ext
