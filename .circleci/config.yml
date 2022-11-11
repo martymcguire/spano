@@ -1,0 +1,57 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8.10
+              
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - setup_remote_docker
+         
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+            
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+        
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          
+      - run:
+          name: login to docker hub
+          command: |
+            . venv/bin/activate
+            invoke dlogin
+            
+      - run:
+          name: build docker image
+          command: |
+            . venv/bin/activate
+            invoke dbuild
+
+      - run:
+          name: push docker image
+          command: |
+            . venv/bin/activate
+            invoke dpush
+
+      - run:
+          name: deploy docker image
+          command: |
+            . venv/bin/activate
+            fab deploy
